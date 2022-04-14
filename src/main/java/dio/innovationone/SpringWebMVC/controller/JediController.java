@@ -1,7 +1,7 @@
 package dio.innovationone.SpringWebMVC.controller;
 
 import dio.innovationone.SpringWebMVC.model.Jedi;
-import dio.innovationone.SpringWebMVC.repository.JediRepository;
+import dio.innovationone.SpringWebMVC.service.JediService;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -18,39 +19,21 @@ import javax.validation.Valid;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class JediController {
 
-    private JediRepository jediRepository;
+    private JediService jediService;
 
     @GetMapping("/jedi")
     public ModelAndView jedi(){
-
-        final ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("jedi");
-
-        modelAndView.addObject("allJedi", jediRepository.getAllJedi());
-
-        return modelAndView;
+        return jediService.getAllJedi();
     }
 
     @GetMapping("/new-jedi")
     public ModelAndView newJedi(){
-
-        final ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("new-jedi");
-
-        modelAndView.addObject("jedi", new Jedi());
-        return modelAndView;
+        return jediService.newJediView();
     }
 
     @PostMapping("/jedi")
-    public String createJedi(@Valid @ModelAttribute Jedi jedi, @NotNull BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()){
-            return "new-jedi";
-        }
-
-        jediRepository.add(jedi);
-
-        return "redirect:jedi";
+    public String createJedi(@Valid @ModelAttribute Jedi jedi, @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        return jediService.createJedi(jedi, bindingResult, redirectAttributes);
     }
 
 }

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public class Jedi {
     @NotBlank
     private String lastName;
 
-    //Lombok @Data e @AllArgsContructor simplifica toda essa construção
+    //Lombok @Data, @NoArgsConstructor e @AllArgsContructor simplifica toda essa construção
 
 //    public Jedi (final String name, final String lastName) {
 //        this.name = name;

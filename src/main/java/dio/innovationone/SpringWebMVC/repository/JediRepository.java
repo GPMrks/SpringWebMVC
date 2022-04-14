@@ -2,6 +2,7 @@ package dio.innovationone.SpringWebMVC.repository;
 
 import dio.innovationone.SpringWebMVC.model.Jedi;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,4 +24,5 @@ public class JediRepository {
     public void add(Jedi jedi) {
         this.jedi.add(jedi);
     }
+
 }
