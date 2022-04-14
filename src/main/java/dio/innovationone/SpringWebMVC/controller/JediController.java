@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,17 +23,17 @@ public class JediController {
     private JediService jediService;
 
     @GetMapping("/jedi")
-    public ModelAndView jedi(){
+    public ModelAndView jedi() {
         return jediService.getAllJedi();
     }
 
     @GetMapping("/new-jedi")
-    public ModelAndView newJedi(){
-        return jediService.newJediView();
+    public String newJediView(Model model) {
+        return jediService.newJediView(model);
     }
 
     @PostMapping("/jedi")
-    public String createJedi(@Valid @ModelAttribute Jedi jedi, @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String createJedi(@Valid @ModelAttribute Jedi jedi, @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         return jediService.createJedi(jedi, bindingResult, redirectAttributes);
     }
 

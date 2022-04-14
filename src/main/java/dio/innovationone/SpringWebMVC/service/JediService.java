@@ -5,8 +5,9 @@ import dio.innovationone.SpringWebMVC.repository.JediRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Service
@@ -15,7 +16,7 @@ public class JediService {
 
     private JediRepository jediRepository;
 
-    public ModelAndView getAllJedi(){
+    public ModelAndView getAllJedi() {
 
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("jedi");
@@ -26,27 +27,26 @@ public class JediService {
 
     }
 
-    public ModelAndView newJediView(){
-        final ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("new-jedi");
-
-        modelAndView.addObject("jedi", new Jedi());
-        return modelAndView;
+    public String newJediView(Model model) {
+        model.addAttribute("jedi", new Jedi());
+        return "new-jedi";
     }
 
     public void add(Jedi jedi) {
         jediRepository.add(jedi);
     }
 
-    public String createJedi(Jedi jedi, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String createJedi(Jedi jedi, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "new-jedi";
         }
 
         jediRepository.add(jedi);
         redirectAttributes.addFlashAttribute("message", "Jedi successfully created!");
 
-        return "redirect:jedi";
+        return "redirect:/jedi";
+
     }
+
 }

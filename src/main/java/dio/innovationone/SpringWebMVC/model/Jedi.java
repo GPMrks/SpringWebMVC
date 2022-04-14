@@ -6,16 +6,19 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class Jedi {
 
-    @NotBlank
+    @NotBlank(message = "User's name cannot be empty.")
+    @Size(min = 3, max = 20, message = "Name must have between 3 and 20 letters")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "User's last name cannot be empty.")
+    @Size(min = 3, max = 20, message = "Last Name must not have more than 20 letters")
     private String lastName;
 
     //Lombok @Data, @NoArgsConstructor e @AllArgsContructor simplifica toda essa construção
