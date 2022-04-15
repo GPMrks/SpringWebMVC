@@ -5,11 +5,10 @@ import dio.innovationone.SpringWebMVC.service.JediService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,15 +18,32 @@ public class JediResource {
     private JediService jediService;
 
     @GetMapping("/api/jedi")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Jedi> getAllJedi(){
+    public List<Jedi> getAllJedi() {
         return jediService.findAllList();
     }
 
     @GetMapping("/api/jedi/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Jedi getJedi(@PathVariable("id") Long id){
-        return jediService.getById(id);
+    public ResponseEntity<Jedi> getJedi(@PathVariable("id") Long id) {
+        final Jedi jedi = jediService.getById(id);
+        return ResponseEntity.ok(jedi);
+    }
+
+    @PostMapping("/api/jedi")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Jedi createJedi(@Valid @RequestBody Jedi jedi) {
+        return jediService.createJedi(jedi);
+    }
+
+    @PutMapping("/api/jedi/{id}")
+    public ResponseEntity<Jedi> updateJedi(@Valid @RequestBody Jedi jediDTO, @PathVariable("id") Long id) {
+        final Jedi jedi = jediService.updateJedi(jediDTO, id);
+        return ResponseEntity.ok(jedi);
+    }
+
+    @DeleteMapping("/api/jedi/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteJedi(@PathVariable("id") Long id) {
+        jediService.deleteJedi(id);
     }
 
 }
