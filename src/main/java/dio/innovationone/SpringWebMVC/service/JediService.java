@@ -1,5 +1,6 @@
 package dio.innovationone.SpringWebMVC.service;
 
+import dio.innovationone.SpringWebMVC.exception.JediNotFoundException;
 import dio.innovationone.SpringWebMVC.model.Jedi;
 import dio.innovationone.SpringWebMVC.repository.JediRepository;
 import lombok.AllArgsConstructor;
@@ -10,30 +11,38 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class JediService {
 
     private JediRepository jediRepository;
 
+    public List<Jedi> findAllList() {
+        return jediRepository.findAll();
+    }
+
     public ModelAndView getAllJedi() {
 
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("jedi");
 
-        modelAndView.addObject("allJedi", jediRepository.getAllJedi());
+        modelAndView.addObject("allJedi", jediRepository.findAll());
 
         return modelAndView;
 
     }
+
 
     public String newJediView(Model model) {
         model.addAttribute("jedi", new Jedi());
         return "new-jedi";
     }
 
-    public void add(Jedi jedi) {
-        jediRepository.add(jedi);
+    public Jedi add(Jedi jedi) {
+        return jediRepository.save(jedi);
     }
 
     public String createJedi(Jedi jedi, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -42,11 +51,22 @@ public class JediService {
             return "new-jedi";
         }
 
-        jediRepository.add(jedi);
+        jediRepository.save(jedi);
         redirectAttributes.addFlashAttribute("message", "Jedi successfully created!");
 
         return "redirect:/jedi";
 
+    }
+
+    public Jedi getById(Long id) {
+
+        Optional<Jedi> jedi = jediRepository.findById(id);
+
+        if(jedi.isPresent()) {
+            return jedi.get();
+        } else {
+            throw new JediNotFoundException();
+        }
     }
 
 }
