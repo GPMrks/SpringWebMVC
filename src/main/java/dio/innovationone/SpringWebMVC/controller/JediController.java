@@ -36,12 +36,19 @@ public class JediController {
 
     @GetMapping("/jedi/{id}/delete")
     public String deleteJedi(@PathVariable("id") final Long id, RedirectAttributes redirectAttributes) {
-
         final Optional<Jedi> jedi = Optional.ofNullable(jediService.getById(id));
         jediService.deleteJedi(id);
 
         redirectAttributes.addFlashAttribute("message", "Jedi removido com sucesso.");
         return "redirect:/jedi" ;
+    }
+
+    @GetMapping("/jedi/{id}/update")
+    public String updateJedi(@PathVariable("id") final Long id, Model model) {
+        final Optional<Jedi> jedi = Optional.ofNullable(jediService.getById(id));
+
+        model.addAttribute("jedi", jedi.get());
+        return "edit-jedi";
     }
 
     @PostMapping("/jedi")
