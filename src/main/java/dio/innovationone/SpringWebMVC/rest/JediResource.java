@@ -2,6 +2,7 @@ package dio.innovationone.SpringWebMVC.rest;
 
 import dio.innovationone.SpringWebMVC.model.Jedi;
 import dio.innovationone.SpringWebMVC.service.JediService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Tag(name = "Cadastro de Jedi", description = "CRUD Jedi")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class JediResource {
 
