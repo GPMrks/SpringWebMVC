@@ -5,7 +5,6 @@ import dio.innovationone.SpringWebMVC.model.Jedi;
 import dio.innovationone.SpringWebMVC.repository.JediRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,15 +73,14 @@ public class JediService {
         }
     }
 
-    public Jedi updateJedi(final Jedi jediDTO, final Long id){
+    public Jedi updateJedi(final Jedi jediDTO, final Long id) {
 
         final Optional<Jedi> jediOptional = jediRepository.findById(id);
         final Jedi jedi;
 
-        if(jediOptional.isPresent()){
+        if (jediOptional.isPresent()) {
             jedi = jediOptional.get();
-        }
-        else{
+        } else {
             throw new JediNotFoundException(id);
         }
 
@@ -92,7 +90,7 @@ public class JediService {
         return jediRepository.save(jedi);
     }
 
-    public void deleteJedi(Long id){
+    public void deleteJedi(Long id) {
         final Jedi jedi = getById(id);
         jediRepository.delete(jedi);
     }
