@@ -15,7 +15,7 @@ public class SpringDoc {
     public OpenAPI customOpenAPI(@Value("${springdoc.version}") String appVersion) {
         return new OpenAPI()
                 .components(new Components())
-                .info(new Info().title("REST API Cities para Cadastro de Jedi").version("10.0.0")
+                .info(new Info().title("REST API para Cadastro de Jedi").version("10.0.0")
                         .description("Digital Innovation: Expert class - Cadastro de Jedi utilizando API Rest e também Spring MVC" +
                                 " @ " + "https://api-jedilive.herokuapp.com/jedi")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
